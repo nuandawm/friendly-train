@@ -12,8 +12,8 @@ describe('elaborate pyramid fastest path', () => {
       [4,5,6],
       [7,8,9,10]
     ]
-    const { path, sum } = elaboratePyramidFastestPath_bruteForce(exampleMatrix.length, exampleMatrix)
-    expect(sum).toBe(14)
+    const { path, pathLength } = elaboratePyramidFastestPath_bruteForce(exampleMatrix.length, exampleMatrix)
+    expect(pathLength).toBe(14)
     expect(path).toEqual([0,0,0,0])
   })
   it('should return 16 given the 4-rows example matrix A', () => {
@@ -23,7 +23,7 @@ describe('elaborate pyramid fastest path', () => {
       [2,4,6],
       [8,5,9,3]
     ]
-    expect(elaboratePyramidFastestPath_bruteForce(exampleMatrixA.length, exampleMatrixA).sum)
+    expect(elaboratePyramidFastestPath_bruteForce(exampleMatrixA.length, exampleMatrixA).pathLength)
       .toBe(16)
   })
   it('should return 447 given the 15-rows example matrix B', () => {
@@ -44,7 +44,7 @@ describe('elaborate pyramid fastest path', () => {
       [63, 66, 4, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31],
       [4, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 4, 23]
     ]
-    expect(elaboratePyramidFastestPath_bruteForce(exampleMatrixB.length, exampleMatrixB).sum)
+    expect(elaboratePyramidFastestPath_bruteForce(exampleMatrixB.length, exampleMatrixB).pathLength)
       .toBe(447)
   })
 })
