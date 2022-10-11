@@ -19,22 +19,26 @@ async function getDataFromPyramidDataFile(path) {
 }
 
 function mapWeightMatrixToNodesTree(matrix, getChildrenIndexes) {
+  const nodesMatrix = matrix
+    .map((row, i) => row
+      .map((weight, j) => SimpleNode(SimpleNodeType.MIDDLE, weight, i, j, null)))
+
   const recursiveMap = (row, col, isRoot) => {
+    const currentNode = nodesMatrix[row][col]
     const childrenIndexes = getChildrenIndexes(row, col)
 
-    let type = SimpleNodeType.MIDDLE
     if (isRoot) {
-      type = SimpleNodeType.SOURCE
+      currentNode.type = SimpleNodeType.SOURCE
     } else if (childrenIndexes.length === 0) {
-      type = SimpleNodeType.DESTINATION
+      currentNode.type = SimpleNodeType.DESTINATION
     }
 
-    const nodeRelationships = childrenIndexes.map(([childRow, childCol]) => Relationship(
+    currentNode.relationships = childrenIndexes.map(([childRow, childCol]) => Relationship(
       RelationshipType.PARENT_OF,
       recursiveMap(childRow, childCol, false)
     ))
 
-    return SimpleNode(type, matrix[row][col], row, col, nodeRelationships)
+    return currentNode
   }
 
   return recursiveMap(0, 0, true)
