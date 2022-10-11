@@ -1,5 +1,5 @@
 const { getDataFromPyramidDataFile } = require('./core/utils');
-const { elaboratePyramidFastestPath_bruteForce } = require('./core');
+const { elaboratePyramidFastestPath_bruteForce } = require('./core/brute-force');
 
 (async () => {
   console.log('*** first pyramid ***')

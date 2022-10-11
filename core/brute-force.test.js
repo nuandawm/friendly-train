@@ -2,7 +2,7 @@ const { it, describe, expect } = require('@jest/globals')
 const {
   elaboratePyramidFastestPath_bruteForce, getPyramidChildrenIndexes, findAllPaths,
   findShortestPath
-} = require('./index')
+} = require('./brute-force')
 
 describe('elaborate pyramid fastest path', () => {
   it('should return 14 given the 4-rows example matrix', () => {
