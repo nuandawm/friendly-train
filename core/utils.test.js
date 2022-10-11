@@ -40,7 +40,7 @@ describe('map pyramid to node list', () => {
     expect(mapWeightMatrixToNodesTree(
       twoRowsPyramidMatrix,
       (row, col) => getPyramidChildrenIndexes(twoRowsPyramidMatrix.length, row, col)
-    )).toEqual(node1)
+    ).rootNode).toEqual(node1)
   })
 
   it('should return a tree of 6 connected nodes given the 3-rows pyramid matrix', () => {
@@ -63,7 +63,7 @@ describe('map pyramid to node list', () => {
     expect(mapWeightMatrixToNodesTree(
       threeRowsPyramidMatrix,
       (row, col) => getPyramidChildrenIndexes(threeRowsPyramidMatrix.length, row, col)
-    )).toEqual(node1)
+    ).rootNode).toEqual(node1)
   })
 
   it('should return a tree where the node 5 is not duplicated given the 3-rows pyramid matrix', () => {
@@ -83,7 +83,7 @@ describe('map pyramid to node list', () => {
       Relationship(RelationshipType.PARENT_OF, node6)
     )
 
-    const rootNode = mapWeightMatrixToNodesTree(
+    const { rootNode } = mapWeightMatrixToNodesTree(
       threeRowsPyramidMatrix,
       (row, col) => getPyramidChildrenIndexes(threeRowsPyramidMatrix.length, row, col)
     )

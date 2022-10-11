@@ -30,7 +30,7 @@ function findShortestPath(paths, weightMatrix) {
   paths.forEach((path, pathIndex) => {
     const pathSum = path
       .map((col, row) => weightMatrix[row][col])
-      .reduce((weight, sum) => sum + weight)
+      .reduce((sum, weight) => sum + weight)
 
     if(sum === null || pathSum < sum) {
       sum = pathSum

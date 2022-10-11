@@ -6,6 +6,12 @@
 
 A simple problem about pyramids
 
+## Dependencies
+...
+```shell
+npm ci
+```
+
 ## Get started
 To start the project simply run
 ```shell
