@@ -1,5 +1,5 @@
 const { getDataFromPyramidDataFile } = require('./core/utils');
-const { elaboratePyramidFastestPath_simplifiedDijkstra } = require('./core/dijkstra');
+const { elaboratePyramidFastestPath_bruteForce } = require('./core/brute-force');
 
 (async () => {
   console.log('*** first pyramid ***')
@@ -8,7 +8,7 @@ const { elaboratePyramidFastestPath_simplifiedDijkstra } = require('./core/dijks
   console.log('matrix data:')
   console.log(weightMatrixStr)
   console.log('finding the fastest path...')
-  let { pathLength } = elaboratePyramidFastestPath_simplifiedDijkstra(rowsQuantity, weightMatrix)
+  let { pathLength } = elaboratePyramidFastestPath_bruteForce(rowsQuantity, weightMatrix)
   console.log('the length of the fastest path is:', pathLength)
 
   console.log('\n*** second pyramid ***');
@@ -17,7 +17,7 @@ const { elaboratePyramidFastestPath_simplifiedDijkstra } = require('./core/dijks
   console.log('matrix data:')
   console.log(weightMatrixStr)
   console.log('finding the fastest path...');
-  ({ pathLength } = elaboratePyramidFastestPath_simplifiedDijkstra(rowsQuantity, weightMatrix))
+  ({ pathLength } = elaboratePyramidFastestPath_bruteForce(rowsQuantity, weightMatrix))
   console.log('the length of the fastest path is:', pathLength)
 
   console.log('\n*** third pyramid ***');
@@ -26,6 +26,6 @@ const { elaboratePyramidFastestPath_simplifiedDijkstra } = require('./core/dijks
   console.log('matrix data:')
   console.log(weightMatrixStr)
   console.log('finding the fastest path...');
-  ({ pathLength } = elaboratePyramidFastestPath_simplifiedDijkstra(rowsQuantity, weightMatrix))
+  ({ pathLength } = elaboratePyramidFastestPath_bruteForce(rowsQuantity, weightMatrix))
   console.log('the length of the fastest path is:', pathLength)
 })()

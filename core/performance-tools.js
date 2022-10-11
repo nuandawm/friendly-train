@@ -24,16 +24,6 @@ function computeSimpleBenchmark(callback, iterations) {
   }
 }
 
-// return the maximum call stack size
-function computeMaxCallStackSize() {
-  try {
-    return 1 + computeMaxCallStackSize();
-  } catch (e) {
-    // Call stack overflow
-    return 1;
-  }
-}
-
 module.exports = {
-  computeSimpleBenchmark, computeMaxCallStackSize
+  computeSimpleBenchmark
 }
