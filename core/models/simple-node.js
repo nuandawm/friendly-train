@@ -1,10 +1,8 @@
-function SimpleNode(type, weight, row, col, relationships) {
+function SimpleNode(type, weight, relationships) {
   return {
     type,
     relationships,
     props: {
-      row,
-      col,
       weight
     },
   }

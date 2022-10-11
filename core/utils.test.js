@@ -4,12 +4,12 @@ const { SimpleNode, SimpleNodeType, Relationship, RelationshipType } = require('
 const { getPyramidChildrenIndexes } = require("./common");
 
 describe('map pyramid to node list', () => {
-  const node1 = SimpleNode(SimpleNodeType.SOURCE, 1, 0, 0, [])
-  const node2 = SimpleNode(SimpleNodeType.DESTINATION, 2, 1, 0, [])
-  const node3 = SimpleNode(SimpleNodeType.DESTINATION, 3, 1, 1, [])
-  const node4 = SimpleNode(SimpleNodeType.DESTINATION, 4, 2, 0, [])
-  const node5 = SimpleNode(SimpleNodeType.DESTINATION, 5, 2, 1, [])
-  const node6 = SimpleNode(SimpleNodeType.DESTINATION, 6, 2, 2, [])
+  const node1 = SimpleNode(SimpleNodeType.SOURCE, 1, [])
+  const node2 = SimpleNode(SimpleNodeType.DESTINATION, 2, [])
+  const node3 = SimpleNode(SimpleNodeType.DESTINATION, 3, [])
+  const node4 = SimpleNode(SimpleNodeType.DESTINATION, 4, [])
+  const node5 = SimpleNode(SimpleNodeType.DESTINATION, 5, [])
+  const node6 = SimpleNode(SimpleNodeType.DESTINATION, 6, [])
   const allNodes = Array(node1, node2, node3, node4, node5, node6)
   const twoRowsPyramidMatrix = [
     [node1.props.weight],

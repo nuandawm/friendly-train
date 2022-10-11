@@ -20,8 +20,8 @@ async function getDataFromPyramidDataFile(path) {
 
 function mapWeightMatrixToNodesTree(matrix, getChildrenIndexes) {
   const nodesMatrix = matrix
-    .map((row, i) => row
-      .map((weight, j) => SimpleNode(SimpleNodeType.MIDDLE, weight, i, j, null)))
+    .map(row => row
+      .map(weight => SimpleNode(SimpleNodeType.MIDDLE, weight, null)))
 
   const recursiveMap = (row, col, isRoot) => {
     const currentNode = nodesMatrix[row][col]
