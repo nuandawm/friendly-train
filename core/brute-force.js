@@ -1,7 +1,4 @@
-function getPyramidChildrenIndexes(rowsQuantity, row, col) {
-  const nextRow = row+1
-  return nextRow < rowsQuantity ? [[nextRow, col], [nextRow, col+1]] : []
-}
+const { getPyramidChildrenIndexes } = require('./common')
 
 function findAllPaths(getChildrenIndexes) {
   // TODO better write this recursive function
@@ -57,7 +54,6 @@ function elaboratePyramidFastestPath_bruteForce(rowsQuantity, pyramidMatrix) {
 
 module.exports = {
   elaboratePyramidFastestPath_bruteForce,
-  getPyramidChildrenIndexes,
   findAllPaths,
   findShortestPath
 }
