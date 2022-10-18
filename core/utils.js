@@ -21,9 +21,9 @@ async function getDataFromPyramidDataFile(path) {
 function mapWeightMatrixToNodesTree(matrix, getChildrenIndexes) {
   const nodesList = []
   const nodesMatrix = matrix
-    .map(row => row
-      .map(weight => {
-        const node = SimpleNode(SimpleNodeType.MIDDLE, weight, null)
+    .map((row, i) => row
+      .map((weight, j) => {
+        const node = SimpleNode(SimpleNodeType.MIDDLE, null, weight, i, j)
         nodesList.push(node)
         return node
       }))
@@ -53,7 +53,37 @@ function mapWeightMatrixToNodesTree(matrix, getChildrenIndexes) {
   }
 }
 
+function range(from, to) {
+  return {
+    [Symbol.iterator]: function(){
+      return {
+        current: from,
+        last: to,
+        next() {
+          return this.current < this.last
+            ? { done: false, value: this.current++ }
+            : { done: true }
+        }
+      }
+    }
+  }
+}
+
+function getRandomInteger(max) {
+  return Math.floor(Math.random() * max) + 1
+}
+
+function generateRandomPyramid(depth, randomMax) {
+  return Array.from(
+    range(1, depth + 1),
+    elem => Array.from(
+      range(0, elem), () => getRandomInteger(randomMax)
+    )
+  )
+}
+
 module.exports = {
   getDataFromPyramidDataFile,
-  mapWeightMatrixToNodesTree
+  mapWeightMatrixToNodesTree,
+  generateRandomPyramid
 }

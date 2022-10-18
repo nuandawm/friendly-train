@@ -60,7 +60,83 @@ function elaboratePyramidFastestPath_simplifiedDijkstra(rowsQuantity, pyramidMat
   }
 }
 
+// PROPER DIJKSTRA
+
+function properDijkstraInit(nodesList) {
+  const dist = new Map();
+  const prev = new Map();
+  const queue = [];
+
+  nodesList.forEach(node => {
+    dist.set(node, Infinity);
+    // prev.set(node, undefined) // not needed
+    queue.push(node)
+  })
+
+  return { dist, prev, queue }
+}
+
+function findNodeInQueueWithMinDist(queue, dist) {
+  let nodeFound = null;
+  let minDistance = Infinity;
+  for (const node of queue) {
+    const distValue = dist.get(node);
+    if (distValue < minDistance) {
+      minDistance = distValue;
+      nodeFound = node;
+    }
+  }
+  return nodeFound
+}
+
+function getNeighboursStillInQueue(node, queue) {
+  return node.relationships
+    .map(rel => rel.node)
+    .filter(node => queue.indexOf(node) !== -1);
+}
+
+function recursiveElaboratePath(prev, child, path) {
+  const parent = prev.get(child);
+  if (parent !== undefined) {
+    return recursiveElaboratePath(prev, parent, [child].concat(path))
+  } else {
+    return [child].concat(path)
+  }
+}
+
+function elaboratePyramidFastestPath_properDijkstra(rowsQuantity, pyramidMatrix) {
+  // convert the weight matrix into a node tree
+  const { nodesMatrix, nodesList } = mapWeightMatrixToNodesTree(pyramidMatrix, (row, col) => getPyramidChildrenIndexes(rowsQuantity, row, col));
+  const sourceNode = nodesMatrix[0][0];
+
+  const { dist, prev, queue } = properDijkstraInit(nodesList);
+  dist.set(sourceNode, sourceNode.props.weight);
+
+  let minDistNode = sourceNode;
+  while(minDistNode.type !== SimpleNodeType.DESTINATION) {
+    // remove min dist node from queue
+    queue.splice(queue.indexOf(minDistNode), 1);
+    // get all neighbour node still in queue
+    const neighbourNodes = getNeighboursStillInQueue(minDistNode, queue);
+    for (const node of neighbourNodes) {
+      const alt = dist.get(minDistNode) + node.props.weight;
+      if (alt < dist.get(node)) {
+        dist.set(node, alt)
+        prev.set(node, minDistNode)
+      }
+    }
+    // get next min dist node
+    minDistNode = findNodeInQueueWithMinDist(queue, dist);
+  }
+
+  return {
+    pathLength: dist.get(minDistNode),
+    path: recursiveElaboratePath(prev, minDistNode, [])
+  };
+}
+
 module.exports = {
   elaboratePyramidFastestPath_simplifiedDijkstra,
-  getVisitedParentNonVisitedNodes
+  getVisitedParentNonVisitedNodes,
+  elaboratePyramidFastestPath_properDijkstra
 }

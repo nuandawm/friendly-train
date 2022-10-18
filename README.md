@@ -17,9 +17,14 @@ npm ci
 ```
 
 ## Get started
-To run the project using the "simplified Dijkstra" algorithm run
+To run the project using the Dijkstra algorithm run
 ```shell
 npm run start
+```
+
+To run the project using the "simplified Dijkstra" algorithm (slower) run
+```shell
+npm run start-simplified-dijkstra
 ```
 
 To run the project using the "brute force" algorithm run
@@ -29,7 +34,7 @@ npm run start-brute-force
 
 ## Performance
 There's a script to compare the performance of the two implemented
-algorithms (_brute force_ and _simplified dijkstra_)
+algorithms (_brute force_, _dijkstra_ and _simplified dijkstra_)
 
 To start the performance script run
 ```shell

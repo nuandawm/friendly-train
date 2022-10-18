@@ -7,8 +7,9 @@
     "test": "jest",
     "test-watch": "jest --watchAll",
     "start": "node index.js",
+    "start-simplified-dijkstra": "node index-simplified-dijkstra.js",
     "start-brute-force": "node index-brute-force.js",
-    "performance-analysis": "node performanceAnalysis.js"
+    "performance-analysis": "node performance-analysis.js"
   },
   "keywords": [],
   "author": "",
