@@ -1,29 +1,30 @@
 const { mapWeightMatrixToNodesTree } = require('./utils')
 const { getPyramidChildrenIndexes } = require("./common");
-const { SimpleNodeType, SimpleNodeWithTentativeDistance, SimpleNode } = require("./models");
+const { SimpleNodeType, SimpleNode } = require("./models");
 
 /**
  * Return a list of not visited nodes that have a visited parent.
  * The returned list contains both the node and the tentative distance from the source
  * (based on parent distance and node weight)
  * @param rootNode
- * @returns {[{tentativeDistance: number, node: SimpleNode}]}
+ * @returns {Map<SimpleNode, number>}
  */
 function getVisitedParentNonVisitedNodes(rootNode) {
-  const recursiveGet = (parentNode, currentNode, nonVisitedList) => {
+  const recursiveGet = (parentNode, currentNode, nonVisitedTentativeDistanceMap) => {
     if (currentNode.distance !== undefined) {
       currentNode.relationships.forEach(relationship => {
-        recursiveGet(currentNode, relationship.node, nonVisitedList)
+        recursiveGet(currentNode, relationship.node, nonVisitedTentativeDistanceMap)
       })
     } else if (parentNode.distance !== undefined) {
-      nonVisitedList.push(SimpleNodeWithTentativeDistance(
-        currentNode,
-        parentNode.distance + currentNode.props.weight
-      ))
+      if (!nonVisitedTentativeDistanceMap.has(currentNode)) {
+        nonVisitedTentativeDistanceMap.set(currentNode, parentNode.distance + currentNode.props.weight)
+      } else if (parentNode.distance + currentNode.props.weight < nonVisitedTentativeDistanceMap.get(currentNode)) {
+        nonVisitedTentativeDistanceMap.set(currentNode, parentNode.distance + currentNode.props.weight)
+      }
     }
-    return nonVisitedList
+    return nonVisitedTentativeDistanceMap
   }
-  return recursiveGet(null, rootNode, [])
+  return recursiveGet(null, rootNode, new Map())
 }
 
 /**
@@ -43,20 +44,25 @@ function elaboratePyramidFastestPath_simplifiedDijkstra(rowsQuantity, pyramidMat
   let currentNode = rootNode
   while (currentNode.type !== SimpleNodeType.DESTINATION) {
     // find the non visited node with the minimum distance from the source
-    const minNodeAndDistance = nonVisitedNodes.reduce((min, curr) => {
-      return curr.tentativeDistance < min.tentativeDistance ? curr : min
-    })
+    let minNode = null;
+    let minDistance = Infinity;
+    for (const [node, tentativeDistance] of nonVisitedNodes) {
+      if (tentativeDistance < minDistance) {
+        minDistance = tentativeDistance
+        minNode = node
+      }
+    }
     // set the current node to exit the loop when a destination node is reached
-    currentNode = minNodeAndDistance.node
+    currentNode = minNode
     // set the node distance (and mark it as visited)
-    currentNode.distance = minNodeAndDistance.tentativeDistance
+    currentNode.distance = minDistance
     // get the non-visited nodes with visited parent TODO this could be improved
     nonVisitedNodes = getVisitedParentNonVisitedNodes(rootNode)
   }
 
   return {
     pathLength: currentNode.distance,
-    path: null // not available with this algorithm
+    path: null // not available with this algorithm TODO this could be done
   }
 }
 

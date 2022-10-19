@@ -73,8 +73,12 @@ describe('get visited parent not visited nodes', () => {
     node3.distance = 7
 
     const nonVisitedNodes = getVisitedParentNonVisitedNodes(node1)
-    const nodes = nonVisitedNodes.map(el => el.node)
-    const distances = nonVisitedNodes.map(el => el.tentativeDistance)
+    const nodes = []
+    const distances = []
+    for (const [node, tentativeDistance] of nonVisitedNodes) {
+      nodes.push(node);
+      distances.push(tentativeDistance);
+    }
     expect(nodes).toContain(node2)
     expect(nodes).toContain(node5)
     expect(nodes).toContain(node6)
